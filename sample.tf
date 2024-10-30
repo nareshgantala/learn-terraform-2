@@ -18,3 +18,11 @@ output "instance_public_ip" {
   value = aws_instance.web.public_ip
 }
 
+resource "aws_route53_record" "www" {
+  depends_on = [ aws_instance.web ]
+  zone_id = "Z08473532Y02UUGEADBBG"
+  name    = "frontend-dev"
+  type    = "A"
+  ttl     = 300
+  records = [aws_instance.web.private_ip]
+}
